@@ -1,5 +1,8 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -30,9 +33,9 @@ public class Main {
 
 		// 2.- Metodo Listar
 		System.out.println("Lista de empleados:\n" + lista);
-//		for(Empleados empleado:lista) {
-//			System.out.println(empleado);
-//		}
+		// for(Empleados empleado:lista) {
+		// System.out.println(empleado);
+		// }
 
 		// 3.- Metodo buscar
 		Empleados empleadoBuscar = null;
@@ -49,12 +52,128 @@ public class Main {
 		// Actualizo la lista
 		lista.set(0, empleadoEditar);
 		System.out.println("\nNueva lista editada: \n" + lista);
-		
-		// 5.- metodo eliminar
-		lista.remove(2);
-		System.out.println("\nNueva lista editada: \n" + lista);
-		
-		// 6.- 
-	}
 
+		// 5.- metodo eliminar
+		// lista.remove(2);
+		// System.out.println("\nNueva lista editada: \n" + lista);
+
+		/*
+		 * --> toda aplicacion debe de tener las 4 operaciones basicas --> Listas -->
+		 * trabajan con indice --> apuntar a la fila actual del objeto --> indice -->
+		 * tenemos el objeto
+		 * 
+		 * --> Objetivo: aplicaciones escalables y que el mantenimiento se mas sencillo
+		 * 
+		 * --> Errores logicos --> Errores de sintaxis
+		 * 
+		 * --> Las apps se desarrollan pensando en el usuario final
+		 * 
+		 * --> ciclos --> listas --> son iterables --> herenda de la interfaces
+		 * collection --> Iterable
+		 * 
+		 * 
+		 */
+
+		for (int i = 0; i < lista.size(); i++) {
+			System.out.println("Lista de empleados: " + lista.get(i));
+		}
+
+		/*
+		 * equals:Compara la cadena tal cual equalsIgnoreCase: no valida si esta escrito
+		 * en mayusculas o minusculas
+		 * 
+		 */
+		for (int i = 0; i < lista.size(); i++) {
+			if (lista.get(i).getNombre().equalsIgnoreCase("ana")) {
+				System.out.println("Se encontro el empleado por nombre: " + lista.get(i));
+				break; // rompe el flujo de ejecucion
+			} else {
+				System.out.println("No existe el empleado con el nombre solicitado");
+			}
+		}
+
+		// forEach -> es un for mejorado
+		for (Empleados e : lista) {
+			if (e.getDepto().equals("Ventas") || e.getSueldo() == 5100.0) {
+				System.out.println("Se encontro el empleado por depto: " + e);
+			}
+		}
+
+		// Expresion lamda --> Es la forma moderna y limpio de realizar algun
+		// filtro
+		lista.forEach(a -> {
+			System.out.println("Lista de empleados con () -> " + a);
+		});
+
+		lista.stream().filter(a -> a.getEdad() == 30).forEach(b -> {
+			System.out.println("Se encontro los empleados por edad: " + b);
+		});
+
+		// var variables globales --> inferencia de tiposF
+		var buscarSueldo = lista.stream().filter(a -> a.getSueldo() == 5100.0).findFirst();
+		System.out.println("Se encontro el sueldo mas bajo" + buscarSueldo);
+
+		// Contar empleados por depto
+		// map --> mapa de datos --> trabaja con la sentencia key, value
+		Map<String, Long> empleadosPorDepto = lista.stream()
+				.collect(Collectors.groupingBy(Empleados::getDepto, Collectors.counting()));
+		System.out.println("Empleados por depto: " + empleadosPorDepto);
+
+		// Iterator
+		Iterator<Empleados> iterator = lista.iterator();
+		while (iterator.hasNext()) {
+			Empleados intaranadoEmpleados = iterator.next();
+			System.out.println("Lista de empleados utilizando Iterator" + intaranadoEmpleados);
+		}
+
+		// Eliminar
+		for (int i = 0; i < lista.size(); i++) {
+			if (lista.get(i).getNombre().equals("Ana")) {
+				lista.remove(i);
+				System.out.println("Se elimino por nombre");
+			}
+		}
+		System.out.println("Lista actual: -->" + lista);
+
+		// Eliminar pero usando el valor de la lista se pone -1 para que i tenga el valor total del tamano de la lista
+		for (int i = lista.size() - 1; i >= 0; i--) {
+			if (lista.get(i).getNombre().equals("Elena")) {
+				lista.remove(i);
+				System.out.println("Se elimino por nombre");
+			}
+		}
+		System.out.println("Lista actual: -->" + lista);
+		
+		// Eliminar forEach
+		try {
+			for (Empleados e : lista) {
+				if(e.getNombre().equals("Ricardo")) {
+					lista.remove(e);
+					System.out.println("Se elimino utilizando forEach");
+				}
+			}
+		} catch (Exception e2) {
+			System.out.println("Error al eliminar: "+e2.getMessage());
+		}
+		
+		System.out.println("Lista actual: -->" + lista);
+		
+		// Expresion lamda
+		lista.removeIf(a -> a.getNombre().equals("Luis"));
+
+		System.out.println("Lista actual: -->" + lista);
+		
+		
+		/* Ciclos depende de la habilidad y conocimiento
+		 * 
+		 * ciclo recomendable
+		 * buscar --> for, forEach, expresion,lamda,iterador
+		 * eliminar
+		 * for		si
+		 * forEach  no
+		 * Iterador si
+		 * lamda 	si
+		 */
+		 
+	}
 }

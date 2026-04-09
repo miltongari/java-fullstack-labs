@@ -43,6 +43,7 @@ public class Main {
 		celularChange.setPrecio(9999.0);
 		celularChange.setColor("Red");
 		celularChange.setCantidad(1);
+		lista.set(6, celularChange);
 		System.out.println("\n\nLista actualizada de celulares: \n" + lista);
 
 		// No hay stock en bodega, hay que eliminar celulares
