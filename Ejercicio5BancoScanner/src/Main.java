@@ -216,7 +216,7 @@ public class Main {
 					indice = lec.nextInt();
 
 					Banco bancoEliminar = lista.remove(indice);
-					System.out.println("👤🚫 Detalles del Cliente que fue eliminado:\n" + bancoEliminar);
+					System.out.println("\n👤🚫 Detalles del Cliente que fue eliminado:\n" + bancoEliminar);
 					break;
 				case 7:
 					System.out.println("Cerrar Sesión 🚪👋");
